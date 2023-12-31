@@ -1,0 +1,136 @@
+.sidebar {
+  width: 350px;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar.active {
+  width: auto;
+  background-color: red;
+}
+
+.sidebar-wrapper {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 0 2rem;
+  padding-top: 80px;
+}
+
+.sidebar-wrapper .separator {
+  margin: 1rem 0;
+}
+
+.sidebar.active .separator {
+  display: none;
+}
+
+.sidebar-wrapper a {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-radius: var(--radius-05);
+  transition: background-color 0.3s ease-in-out;
+}
+
+.sidebar-wrapper a:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.sidebar-wrapper .sidebar-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 0.8rem;
+}
+
+.sidebar-wrapper .auth {
+  padding: 0.5rem 1rem;
+}
+
+.sidebar-wrapper .auth a {
+  padding: 0.4rem 1rem;
+  border-radius: 0.3rem;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  margin-top: 1rem;
+  color: inherit;
+  width: fit-content;
+}
+
+.sidebar-wrapper .auth.dark a {
+  border: 2px solid var(--white);
+}
+
+.sidebar-wrapper .auth.light a {
+  border: 2px solid var(--black-3);
+}
+
+.sidebar.active .sidebar-wrapper .auth {
+  display: none;
+}
+
+.toggle-theme {
+  margin-top: 1rem;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  border-radius: var(--radius-05);
+  transition: background-color 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.toggle-theme:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.sidebar.active .terms {
+  display: none;
+}
+
+.terms {
+  display: flex;
+  flex-direction: column;
+  height: 100px;
+}
+
+.sidebar.active .sidebar-wrapper span {
+  display: none;
+}
+
+.terms span {
+  font-size: 0.8rem;
+}
+
+.terms-wrapper {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.terms-wrapper span {
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+
+.terms-rights {
+  padding-bottom: 4rem;
+}
+
+@media (max-width: 768px) {
+  .sidebar-wrapper {
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .sidebar-wrapper {
+    padding: 0 0.5rem;
+  }
+}

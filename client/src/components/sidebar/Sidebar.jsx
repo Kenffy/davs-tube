@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import "./sidebar.css";
 import { AppContext } from "../../context/AppContext";
-import { FaLayerGroup, FaCompass } from "react-icons/fa";
+import { FaLayerGroup } from "react-icons/fa";
 import {
   FaHouse,
   FaGear,
@@ -9,65 +9,58 @@ import {
   FaCirclePlay,
   FaCircleQuestion,
   FaCircleHalfStroke,
-  FaUsersRectangle,
   FaClockRotateLeft,
 } from "react-icons/fa6";
 import { NavLink } from "react-router-dom";
 
 export default function Sidebar() {
-  const { state, toggleTheme } = useContext(AppContext);
-  console.log(state);
+  const { state, toggleTheme, toggleMenu } = useContext(AppContext);
+  const authUser = false;
+
   return (
     <div className={state?.onMenu ? "sidebar active" : "sidebar"}>
-      <div className="sidebar-wrapper">
-        <NavLink to="/" onClick={() => {}}>
+      <div className={`sidebar-wrapper ${state?.theme}`}>
+        <NavLink to="/" onClick={toggleMenu}>
           <FaHouse className="sidebar-icon" />
           <span>Home</span>
         </NavLink>
-        <NavLink to="/shorts" onClick={() => {}}>
-          <FaCompass className="sidebar-icon" />
-          <span>Shorts</span>
-        </NavLink>
-        <NavLink to="/videos/subscriptions" onClick={() => {}}>
-          <FaUsersRectangle className="sidebar-icon" />
-          <span>Subscriptions</span>
-        </NavLink>
-
-        <>
-          <hr className="separator" />
-
-          <div className={`auth ${state?.theme}`}>
-            <p>Sign in to like videos, comment and subscribe.</p>
-            <NavLink to="/login">Sign In</NavLink>
-          </div>
-        </>
-
-        <hr className="separator" />
-
-        <NavLink to="/videos/history" onClick={() => {}}>
+        <NavLink to="/videos/history" onClick={toggleMenu}>
           <FaClockRotateLeft className="sidebar-icon" />
           <span>History</span>
         </NavLink>
-        <NavLink to="/videos/playlist" onClick={() => {}}>
+        <NavLink to="/videos/playlist" onClick={toggleMenu}>
           <FaLayerGroup className="sidebar-icon" />
           <span>Playlists</span>
         </NavLink>
-        <NavLink to={`/channel/videos/xyz`} onClick={() => {}}>
+        <NavLink to={`/channel/videos/xyz`} onClick={toggleMenu}>
           <FaCirclePlay className="sidebar-icon" />
           <span>My Videos</span>
         </NavLink>
 
+        {!authUser && (
+          <>
+            <hr className="separator" />
+
+            <div className={`auth ${state?.theme}`}>
+              <p>Sign in to like videos, comment and subscribe.</p>
+              <NavLink className="login-btn" to="/login" onClick={toggleMenu}>
+                Sign In
+              </NavLink>
+            </div>
+          </>
+        )}
+
         <hr className="separator" />
 
-        <NavLink to="/settings" onClick={() => {}}>
+        <NavLink to="/settings" onClick={toggleMenu}>
           <FaGear className="sidebar-icon" />
           <span>Settings</span>
         </NavLink>
-        <NavLink to="/reports" onClick={() => {}}>
+        <NavLink to="/reports" onClick={toggleMenu}>
           <FaFlag className="sidebar-icon" />
           <span>Report</span>
         </NavLink>
-        <NavLink to="/help" onClick={() => {}}>
+        <NavLink to="/help" onClick={toggleMenu}>
           <FaCircleQuestion className="sidebar-icon" />
           <span>Help</span>
         </NavLink>
@@ -88,6 +81,7 @@ export default function Sidebar() {
           </span>
         </div>
       </div>
+      <div className="close-sidebar" onClick={toggleMenu}></div>
     </div>
   );
 }

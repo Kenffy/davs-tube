@@ -1,105 +1,88 @@
 .sidebar {
-  width: 350px;
+  width: 100%;
   min-height: 100vh;
+  position: fixed;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  background-color: var(--black-tr04);
+  visibility: hidden;
+  transition: visibility 0.2s ease-in-out;
 }
 
 .sidebar.active {
-  width: auto;
-  background-color: red;
+  visibility: visible;
 }
 
 .sidebar-wrapper {
-  display: flex;
+  width: 350px;
   height: 100vh;
-  flex-direction: column;
   overflow-y: auto;
-  padding: 0 2rem;
-  padding-top: 80px;
+  transform: translateX(-100%);
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  padding: 5rem 2rem;
+  z-index: 50;
 }
 
-.sidebar-wrapper .separator {
-  margin: 1rem 0;
+.sidebar-wrapper.dark {
+  background-color: var(--black-2);
 }
 
-.sidebar.active .separator {
-  display: none;
+.sidebar-wrapper.light {
+  background-color: var(--white);
 }
 
-.sidebar-wrapper a {
+.sidebar.active .sidebar-wrapper {
+  transform: translateX(0);
+}
+
+.sidebar-wrapper a,
+.sidebar-wrapper .toggle-theme {
   display: flex;
   align-items: center;
-  padding: 0.5rem;
-  margin-bottom: 0.5rem;
+  padding: 0.8rem 0.5rem;
   border-radius: var(--radius-05);
-  transition: background-color 0.3s ease-in-out;
+  cursor: pointer;
 }
 
-.sidebar-wrapper a:hover {
-  background-color: rgba(0, 0, 0, 0.2);
+.sidebar-wrapper a:hover,
+.sidebar-wrapper .toggle-theme:hover {
+  background-color: var(--white-tr02);
 }
 
-.sidebar-wrapper .sidebar-icon {
-  width: 20px;
-  height: 20px;
-  margin-right: 0.8rem;
+.sidebar-icon {
+  margin-right: 1rem;
+  font-size: 1.2rem;
 }
 
-.sidebar-wrapper .auth {
-  padding: 0.5rem 1rem;
+.sidebar .separator {
+  margin: 1.5rem 0;
 }
 
-.sidebar-wrapper .auth a {
-  padding: 0.4rem 1rem;
-  border-radius: 0.3rem;
+.sidebar .auth {
+  padding: 0 0.5rem;
+}
+
+.sidebar .auth .login-btn {
+  padding: 0.4rem 1.2rem;
+  border-radius: var(--radius-05);
   border: none;
   cursor: pointer;
   background-color: transparent;
-  margin-top: 1rem;
-  color: inherit;
+  margin-top: 0.5rem;
   width: fit-content;
+  color: var(--white);
+  background-color: var(--red);
 }
 
-.sidebar-wrapper .auth.dark a {
-  border: 2px solid var(--white);
-}
-
-.sidebar-wrapper .auth.light a {
-  border: 2px solid var(--black-3);
-}
-
-.sidebar.active .sidebar-wrapper .auth {
-  display: none;
-}
-
-.toggle-theme {
-  margin-top: 1rem;
-  padding: 0.5rem;
-  display: flex;
-  align-items: center;
-  border-radius: var(--radius-05);
-  transition: background-color 0.3s ease-in-out;
-  cursor: pointer;
-}
-
-.toggle-theme:hover {
-  background-color: rgba(0, 0, 0, 0.2);
-}
-
-.sidebar.active .terms {
-  display: none;
+.sidebar .auth .login-btn:hover {
+  background-color: var(--darkred);
 }
 
 .terms {
   display: flex;
   flex-direction: column;
   height: 100px;
-}
-
-.sidebar.active .sidebar-wrapper span {
-  display: none;
 }
 
 .terms span {
@@ -123,14 +106,20 @@
   padding-bottom: 4rem;
 }
 
+.close-sidebar {
+  flex-grow: 1;
+  min-height: 100%;
+}
+
 @media (max-width: 768px) {
   .sidebar-wrapper {
-    padding: 0 1rem;
+    padding: 5rem 1rem;
   }
 }
 
 @media (max-width: 640px) {
   .sidebar-wrapper {
-    padding: 0 0.5rem;
+    width: 300px;
+    padding: 5rem 0.5rem;
   }
 }

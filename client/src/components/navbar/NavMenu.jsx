@@ -47,7 +47,13 @@ export default function NavMenu({ user, open, onClose }) {
               </NavLink>
             </div>
           )}
-          <div className="nav-menu-item" onClick={toggleTheme}>
+          <div
+            className="nav-menu-item"
+            onClick={() => {
+              toggleTheme();
+              onClose(false);
+            }}
+          >
             <FaCircleHalfStroke className="sidebar-icon" />
             <span>Dark Mode</span>
           </div>

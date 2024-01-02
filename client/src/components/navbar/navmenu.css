@@ -32,7 +32,7 @@
   display: flex;
   align-items: center;
   border-bottom: 1px solid var(--black-3);
-  padding: 1rem 1rem;
+  padding: 1rem;
 }
 
 .nav-menu-infos {
@@ -70,7 +70,7 @@
 
 .nav-menu-links a:hover,
 .nav-menu-links .nav-menu-item:hover {
-  background-color: var(--black-tr02);
+  background-color: var(--white-tr05);
 }
 
 .nav-menu-links .auth {

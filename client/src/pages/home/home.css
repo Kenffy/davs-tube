@@ -1,4 +1,17 @@
 .home {
-  width: calc(100% - 350px);
-  height: 100%;
+  width: 100%;
+  min-height: 100vh;
+  padding: 5rem 2rem;
+}
+
+@media (max-width: 768px) {
+  .home {
+    padding: 5rem 1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .home {
+    padding: 5rem 0.6rem;
+  }
 }

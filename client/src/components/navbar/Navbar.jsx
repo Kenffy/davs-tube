@@ -10,11 +10,13 @@ import { FiSearch } from "react-icons/fi";
 import { FaArrowLeft } from "react-icons/fa6";
 import Avatar from "../custom/Avatar";
 import Sidebar from "../sidebar/Sidebar";
+import NavMenu from "./NavMenu";
 
 export default function Navbar() {
   const { state, toggleMenu } = useContext(AppContext);
   const [onSearch, setOnSearch] = useState(false);
-  const authUser = true;
+  const [onMenu, setOnMenu] = useState(false);
+  const authUser = false;
 
   const toggleSearch = () => {
     setOnSearch((prev) => !prev);
@@ -50,7 +52,6 @@ export default function Navbar() {
               </button>
             </form>
           </div>
-
           <div className={onSearch ? "nav-right mobile-search" : "nav-right"}>
             <div className="nav-icon mobile" onClick={toggleSearch}>
               <FiSearch />
@@ -65,13 +66,17 @@ export default function Navbar() {
                 </NavLink>
               </>
             )}
-            <NavLink to="/channel" className="nav-icon">
+            <div
+              onClick={() => setOnMenu((prev) => !prev)}
+              className="nav-icon"
+            >
               {authUser ? <Avatar size={35} /> : <HiDotsHorizontal />}
-            </NavLink>
+            </div>
             <div className="nav-icon" onClick={toggleMenu}>
               <GiHamburgerMenu />
             </div>
           </div>
+          <NavMenu user={authUser} open={onMenu} onClose={setOnMenu} />
         </div>
       </div>
       <Sidebar />

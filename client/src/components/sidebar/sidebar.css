@@ -6,6 +6,7 @@
   background-color: var(--black-tr04);
   visibility: hidden;
   transition: visibility 0.2s ease-in-out;
+  z-index: 100;
 }
 
 .sidebar.active {
@@ -20,8 +21,8 @@
   transition: all 0.3s ease-in-out;
   display: flex;
   flex-direction: column;
+  position: absolute;
   padding: 5rem 2rem;
-  z-index: 50;
 }
 
 .sidebar-wrapper.dark {

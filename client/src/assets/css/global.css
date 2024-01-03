@@ -77,6 +77,8 @@ a {
 /* container sizes: 1536px, 1280px, 1024px, 768px, 640px */
 
 .container {
+  /* max-width: 1536px; */
+  max-width: 1920px;
   width: 100%;
   margin: 0 auto;
   padding: 0 2rem;

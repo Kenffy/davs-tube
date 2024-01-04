@@ -1,0 +1,85 @@
+.upsert {
+  padding: 100px 0;
+}
+
+.upsert .wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.upsert .wrapper .heading {
+  font-size: 1.2rem;
+}
+
+.upsert .wrapper .inputs-wrapper {
+  display: flex;
+  gap: 2rem;
+}
+
+.upsert .wrapper .inputs-wrapper .left,
+.upsert .wrapper .inputs-wrapper .right {
+  flex: 1;
+}
+
+.upsert-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.upsert-form input,
+.upsert-form textarea,
+.upsert-form .input-cover {
+  padding: 0.5rem 0.8rem;
+  margin-bottom: 1rem;
+  font-size: 14px;
+  outline: none;
+  background-color: transparent;
+  border-radius: var(--radius-03);
+  border: 2px solid var(--white-tr05);
+}
+
+.upsert-form textarea {
+  resize: none;
+  min-height: 180px;
+  max-height: 350px;
+}
+
+.upsert.dark .upsert-form input,
+.upsert.dark .upsert-form textarea,
+.upsert.dark .upsert-form .input-cover {
+  color: var(--darkwhite);
+}
+
+.upsert-form .input-cover {
+  display: flex;
+  align-items: center;
+}
+
+.upsert-form .input-cover .cover-icon {
+  margin-right: 1rem;
+  font-size: 1rem;
+}
+
+.upsert-form button {
+  padding: 0.5rem;
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--darkwhite);
+  border: none;
+  border-radius: var(--radius-03);
+  background-color: var(--red);
+  cursor: pointer;
+}
+
+.upsert-form button:hover {
+  background-color: var(--darkred);
+}
+
+@media (max-width: 640px) {
+  .upsert .wrapper .inputs-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+}

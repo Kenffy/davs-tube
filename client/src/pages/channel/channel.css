@@ -1,0 +1,124 @@
+.channel {
+  padding-top: 80px;
+}
+
+.channel-wrapper {
+  min-height: 100vh;
+}
+
+.channel-wrapper .banner {
+  height: 300px;
+  width: 100%;
+  border-radius: var(--radius-05);
+  overflow: hidden;
+}
+
+.channel-wrapper .banner img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.channel-wrapper .infos {
+  display: flex;
+  padding: 2rem 1rem;
+}
+
+.channel-wrapper .infos .avatar {
+  height: 120px;
+  width: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: var(--white-tr02);
+}
+
+.channel-wrapper .infos .details {
+  margin-left: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.channel-wrapper .details h4 {
+  font-size: 1.2rem;
+}
+
+.channel-wrapper .details .stats,
+.channel-wrapper .details .desc {
+  font-size: 14px;
+}
+
+.channel-wrapper .details button {
+  height: 35px;
+  font-size: 14px;
+  padding: 0 1rem;
+  width: fit-content;
+  border-radius: 20px;
+  border: none;
+  font-weight: 500;
+  background-color: var(--red);
+  color: var(--darkwhite);
+  cursor: pointer;
+}
+
+.channel-wrapper .details button:hover {
+  background-color: var(--darkred);
+}
+
+.tab-wrapper {
+  margin-top: 1rem;
+  padding: 0 1rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border-bottom: 3px solid var(--white-tr02);
+}
+
+.tab-item {
+  padding: 0.5rem 1.5rem;
+  display: block;
+  cursor: pointer;
+}
+
+.tab-item.active {
+  border-bottom: 2px solid var(--white-tr05);
+}
+
+.channel-settings {
+  padding: 0.5rem;
+}
+
+@media (max-width: 640px) {
+  .channel-wrapper .banner {
+    height: 200px;
+  }
+
+  .channel-wrapper .infos {
+    display: flex;
+    padding: 1rem 0.5rem;
+  }
+
+  .channel-wrapper .infos .avatar {
+    height: 70px;
+    width: 70px;
+  }
+
+  .channel-wrapper .infos .details {
+    margin-left: 0.6rem;
+    gap: 0.4rem;
+  }
+
+  .channel-wrapper .details h4 {
+    font-size: 1rem;
+  }
+
+  .channel-wrapper .details .stats,
+  .channel-wrapper .details .desc {
+    font-size: 13px;
+  }
+
+  .channel-wrapper .details button {
+    height: 30px;
+    font-size: 14px;
+  }
+}

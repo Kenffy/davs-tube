@@ -7,10 +7,10 @@ import { HiDotsHorizontal } from "react-icons/hi";
 export default function Comment() {
   return (
     <div className="comment-item">
-      <div className="comment-user-infos">
+      <div className="user-infos">
         <Avatar size={26} />
-        <div className="user-info-wrapper">
-          <span className="channel" onClick={() => {}}>
+        <div className="info-wrapper">
+          <span className="channel-name" onClick={() => {}}>
             John Doe
           </span>
           •<span className="timeline">2 days ago</span>
@@ -23,7 +23,7 @@ export default function Comment() {
         </p>
       </div>
       <div className="comment-actions">
-        <div onClick={() => {}} className="comment-action-item like">
+        <div onClick={() => {}} className="action-item like">
           <FaRegHeart />
           <span>25</span>
         </div>

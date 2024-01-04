@@ -7,6 +7,7 @@ import Register from "./pages/register/Register";
 import { AppContext } from "./context/AppContext";
 import { useContext } from "react";
 import Channel from "./pages/channel/Channel";
+import Upsert from "./pages/upsert/Upsert";
 
 export default function App() {
   const { state } = useContext(AppContext);
@@ -24,6 +25,7 @@ export default function App() {
             <Route path="channel">
               <Route path=":id" element={<Channel />} />
             </Route>
+            <Route path="upload" element={<Upsert />} />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
             <Route path="*" element={<Navigate to="/" replace />} />

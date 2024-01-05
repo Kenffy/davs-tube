@@ -4,9 +4,12 @@ import Banner from "../../assets/img/banner.png";
 import noprofile from "../../assets/img/default.png";
 import { useState } from "react";
 import PlaylistCard from "../../components/videos/PlaylistCard";
+import EditChannel from "../../components/settings/EditChannel";
 
 export default function Channel() {
   const [tabIndex, setTabIndex] = useState(0);
+  const [onEdit, setOnEdit] = useState(false);
+  const authUser = true;
   return (
     <div className="channel">
       <div className="channel-wrapper container">
@@ -22,7 +25,11 @@ export default function Channel() {
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam,
               recusandae.
             </p>
-            <button>Subscribe</button>
+            {authUser ? (
+              <button onClick={() => setOnEdit(true)}>Edit Channel</button>
+            ) : (
+              <button>Subscribe</button>
+            )}
           </div>
         </div>
         <div className="tab-wrapper">
@@ -63,6 +70,7 @@ export default function Channel() {
           {tabIndex == 2 && <div className="channel-settings">Settings</div>}
         </div>
       </div>
+      <EditChannel open={onEdit} onClose={setOnEdit} />
     </div>
   );
 }

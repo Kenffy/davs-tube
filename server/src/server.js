@@ -21,9 +21,9 @@ app.use(express.json());
 
 // routes
 app.use("/api/auth", authRoutes);
-app.use("/api/channels", authRoutes);
-app.use("/api/videos", authRoutes);
-app.use("/api/comments", authRoutes);
+app.use("/api/channels", channelRoutes);
+app.use("/api/videos", videoRoutes);
+app.use("/api/comments", commentRoutes);
 
 app.listen(PORT, () => {
   mongoConnection();

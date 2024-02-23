@@ -11,13 +11,18 @@ import commentRoutes from "./routes/comments.js";
 
 const app = express();
 dotenv.config();
-app.use(cors({ origin: process.env.CLIENT_URL }));
 
 const PORT = process.env.SERVER_PORT || 5001;
 
 //middlewares
 app.use(cookieParser());
 app.use(express.json());
+app.use(
+  cors({
+    origin: [process.env.CLIENT_URL],
+    credentials: true,
+  })
+);
 
 // routes
 app.use("/api/auth", authRoutes);

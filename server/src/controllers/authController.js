@@ -31,7 +31,7 @@ export const login = async (req, res, next) => {
       return res.status(400).json("Wrong password or channel name!");
 
     const accessToken = jwt.sign({ id: channel._id }, process.env.JWT_SECRET, {
-      expiresIn: "2m",
+      expiresIn: "7d",
     });
 
     const tempChannel = {
@@ -40,13 +40,15 @@ export const login = async (req, res, next) => {
       profile: channel.profile,
     };
 
-    res.cookie("accessToken", accessToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "strict",
-    });
-
-    res.status(200).json(tempChannel);
+    res
+      .cookie("accessToken", accessToken, {
+        maxAge: 7 * 24 * 60 * 60 * 1000, // expires in 7 days and will be automatically deleted from the browser
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+      })
+      .status(200)
+      .json(tempChannel);
   } catch (err) {
     next(err);
   }

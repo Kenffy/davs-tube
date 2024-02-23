@@ -4,7 +4,7 @@ import { verifyToken } from "../utils/utils.js";
 
 const router = express.Router();
 
-router.get("/", ctl.getVideos);
+router.get("/", verifyToken, ctl.getVideos);
 router.get("/:id", ctl.getVideo);
 router.get("/search", ctl.searchVideo);
 router.get("/channel/:id", ctl.getVideosByChannelId);

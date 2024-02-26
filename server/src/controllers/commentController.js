@@ -1,8 +1,8 @@
-import Comment from "../models/Comment.js";
-import Video from "../models/Video.js";
-import Channel from "../models/Channel.js";
+const Comment = require("../models/Comment");
+const Video = require("../models/Video");
+const Channel = require("../models/Channel");
 
-export const addComment = async (req, res, next) => {
+const addComment = async (req, res, next) => {
   const newComment = new Comment({ ...req.body, userId: req.channel.id });
   try {
     const currentVideo = await Video.findById(req.body.videoId);
@@ -26,7 +26,7 @@ export const addComment = async (req, res, next) => {
   }
 };
 
-export const deleteComment = async (req, res, next) => {
+const deleteComment = async (req, res, next) => {
   try {
     const comment = await Comment.findById(res.params.id);
     if (!comment) return next(createError(404, "Comment not found!"));
@@ -49,7 +49,7 @@ export const deleteComment = async (req, res, next) => {
   }
 };
 
-export const getComments = async (req, res, next) => {
+const getComments = async (req, res, next) => {
   try {
     const comments = await Comment.find({ videoId: req.params.videoId });
     if (comments) {
@@ -71,7 +71,7 @@ export const getComments = async (req, res, next) => {
   }
 };
 
-export const likeComment = async (req, res, next) => {
+const likeComment = async (req, res, next) => {
   const id = req.channel.id;
   const commentId = req.params.commentId;
   try {
@@ -85,7 +85,7 @@ export const likeComment = async (req, res, next) => {
   }
 };
 
-export const dislikeComment = async (req, res, next) => {
+const dislikeComment = async (req, res, next) => {
   const id = req.channle.id;
   const commentId = req.params.commentId;
   try {
@@ -97,4 +97,12 @@ export const dislikeComment = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+};
+
+module.exports = {
+  addComment,
+  getComments,
+  deleteComment,
+  likeComment,
+  dislikeComment,
 };

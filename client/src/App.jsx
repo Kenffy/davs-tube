@@ -26,8 +26,11 @@ export default function App() {
               <Route path=":id" element={<Channel />} />
             </Route>
             <Route path="upload" element={<Upsert />} />
-            <Route path="login" element={<Login />} />
-            <Route path="register" element={<Register />} />
+            <Route path="login" element={state?.user ? <Home /> : <Login />} />
+            <Route
+              path="register"
+              element={state?.user ? <Home /> : <Register />}
+            />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Route>
         </Routes>

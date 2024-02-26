@@ -12,7 +12,7 @@ import { AppContext } from "../../context/AppContext";
 import { useContext } from "react";
 
 export default function NavMenu({ user, open, onClose }) {
-  const { state, toggleTheme } = useContext(AppContext);
+  const { state, toggleTheme, logout } = useContext(AppContext);
   return (
     <div className={open ? "nav-menu active" : "nav-menu"}>
       <div className={`nav-menu-wrapper ${state?.theme}`}>
@@ -24,14 +24,14 @@ export default function NavMenu({ user, open, onClose }) {
           >
             <Avatar size={40} />
             <div className="nav-menu-infos">
-              <h4>John Doe</h4>
+              <h4>{user?.name}</h4>
               <span>View Channel</span>
             </div>
           </NavLink>
         )}
         <div className="nav-menu-links">
           {user ? (
-            <div className="nav-menu-item" onClick={() => {}}>
+            <div className="nav-menu-item" onClick={logout}>
               <FiLogOut className="sidebar-icon" />
               <span>Logout</span>
             </div>

@@ -1,7 +1,7 @@
-import Channel from "../models/Channel.js";
-import Video from "../models/Video.js";
+const Channel = require("../models/Channel");
+const Video = require("../models/Video");
 
-export const getVideos = async (req, res, next) => {
+const getVideos = async (req, res, next) => {
   try {
     const videos = await Video.find();
     const l_videos = await fetchChannelInfos(videos);
@@ -17,7 +17,7 @@ export const getVideos = async (req, res, next) => {
   }
 };
 
-export const getVideo = async (req, res, next) => {
+const getVideo = async (req, res, next) => {
   try {
     const video = await Video.findOneAndUpdate(
       { _id: req.params.id },
@@ -37,7 +37,7 @@ export const getVideo = async (req, res, next) => {
   }
 };
 
-export const searchVideo = async (req, res, next) => {
+const searchVideo = async (req, res, next) => {
   const search = req.query.search;
   try {
     const videos = await Video.find({
@@ -58,7 +58,7 @@ export const searchVideo = async (req, res, next) => {
   }
 };
 
-export const getVideosByChannelId = async (req, res, next) => {
+const getVideosByChannelId = async (req, res, next) => {
   const channelId = req.params.id;
   try {
     const videos = await Video.find({ channelId });
@@ -75,7 +75,7 @@ export const getVideosByChannelId = async (req, res, next) => {
   }
 };
 
-export const addVideo = async (req, res, next) => {
+const addVideo = async (req, res, next) => {
   const tmpVideo = new Video({ channelId: req.channel.id, ...req.body });
   try {
     const savedVideo = await tmpVideo.save();
@@ -98,7 +98,7 @@ export const addVideo = async (req, res, next) => {
   }
 };
 
-export const updateVideo = async (req, res, next) => {
+const updateVideo = async (req, res, next) => {
   try {
     const video = await Video.findById(req.params.id);
     if (!video) return res.status(404).json("Video not found!");
@@ -124,7 +124,7 @@ export const updateVideo = async (req, res, next) => {
   }
 };
 
-export const deleteVideo = async (req, res, next) => {
+const deleteVideo = async (req, res, next) => {
   try {
     const video = await Video.findById(req.params.id);
     if (!video) return res.status(404).json("Video not found!");
@@ -146,7 +146,7 @@ export const deleteVideo = async (req, res, next) => {
   }
 };
 
-export const likeVideo = async (req, res, next) => {
+const likeVideo = async (req, res, next) => {
   const id = req.channel.id;
   const videoId = req.params.videoId;
   try {
@@ -161,7 +161,7 @@ export const likeVideo = async (req, res, next) => {
   }
 };
 
-export const dislikeVideo = async (req, res, next) => {
+const dislikeVideo = async (req, res, next) => {
   const id = req.channel.id;
   const videoId = req.params.videoId;
   try {
@@ -191,4 +191,16 @@ const fetchChannelInfos = async (videos) => {
     }
     return results;
   }
+};
+
+module.exports = {
+  getVideo,
+  getVideos,
+  searchVideo,
+  getVideosByChannelId,
+  addVideo,
+  updateVideo,
+  deleteVideo,
+  likeVideo,
+  dislikeVideo,
 };

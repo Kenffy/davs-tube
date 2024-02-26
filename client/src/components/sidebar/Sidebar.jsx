@@ -15,7 +15,7 @@ import { NavLink } from "react-router-dom";
 
 export default function Sidebar() {
   const { state, toggleTheme, toggleMenu } = useContext(AppContext);
-  const authUser = false;
+  const authUser = state?.user;
 
   return (
     <div className={state?.onMenu ? "sidebar active" : "sidebar"}>

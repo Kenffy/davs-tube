@@ -1,8 +1,8 @@
-import Channel from "../models/Channel.js";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+const Channel = require("../models/Channel");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
-export const register = async (req, res, next) => {
+const register = async (req, res, next) => {
   try {
     const hashPassword = bcrypt.hashSync(
       req.body.password,
@@ -16,11 +16,13 @@ export const register = async (req, res, next) => {
   }
 };
 
-export const login = async (req, res, next) => {
+const login = async (req, res, next) => {
+  const nameOrEmail = req.body.email;
   try {
     const channel = await Channel.findOne({
-      email: req.body.email,
+      $or: [{ email: nameOrEmail }, { name: nameOrEmail }],
     });
+
     if (!channel) return res.status(404).json("Channel not found!");
 
     const checkedPassword = await bcrypt.compare(
@@ -53,3 +55,5 @@ export const login = async (req, res, next) => {
     next(err);
   }
 };
+
+module.exports = { register, login };

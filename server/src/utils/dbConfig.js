@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
-export const mongoConnection = () => {
+const mongoConnection = () => {
   mongoose
     .connect(process.env.DATABASE_URL)
     .then(() => {
@@ -10,3 +10,5 @@ export const mongoConnection = () => {
       throw err;
     });
 };
+
+module.exports = mongoConnection;

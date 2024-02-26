@@ -3,11 +3,13 @@ import DragDropFiles from "../../components/custom/DragDropFiles";
 import "./upsert.css";
 import { FaImage } from "react-icons/fa";
 import { AppContext } from "../../context/AppContext";
+import * as services from "../../services/services";
 
 export default function Upsert() {
   const { state } = useContext(AppContext);
   const [cover, setCover] = useState(null);
   const [video, setVideo] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
 
@@ -23,16 +25,67 @@ export default function Upsert() {
     setDesc("");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = {
-      video,
-      cover,
-      title,
-      desc,
-    };
-    console.log("Saving...", data);
-    clearInputs();
+
+    setLoading(true);
+    try {
+      const coverName = await handleUploadCover();
+      const videoName = await handleUploadVideo();
+
+      if (!coverName && !videoName) return;
+
+      const data = {
+        videoUrl: videoName,
+        cover: coverName,
+        title,
+        desc,
+      };
+      const res = await services.createVideo(data);
+      if (res) {
+        clearInputs();
+        setLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
+
+  const handleUploadCover = async () => {
+    if (!cover) return undefined;
+
+    try {
+      const formData = new FormData();
+      const filename = new Date().getTime() + "-" + cover.name;
+      formData.append("filename", filename);
+      formData.append("file", cover);
+
+      const res = await services.uploadCover(formData);
+      if (res.status == 200) {
+        return filename;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleUploadVideo = async () => {
+    if (!video) return undefined;
+
+    try {
+      const formData = new FormData();
+      const filename = new Date().getTime() + "-" + video.name;
+      formData.append("filename", filename);
+      formData.append("file", video);
+
+      const res = await services.uploadVideo(formData);
+      if (res.status == 200) {
+        return filename;
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -72,7 +125,9 @@ export default function Upsert() {
                 onChange={(e) => setDesc(e.target.value)}
                 placeholder="Description"
               />
-              <button type="submit">Upload</button>
+              <button type="submit">
+                {loading ? "Please wait..." : "Upload"}
+              </button>
             </form>
           </div>
         </div>

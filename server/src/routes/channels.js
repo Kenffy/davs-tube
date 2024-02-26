@@ -1,6 +1,6 @@
-import express from "express";
-import * as ctl from "../controllers/channelController.js";
-import { verifyToken } from "../utils/utils.js";
+const express = require("express");
+const ctl = require("../controllers/channelController");
+const verifyToken = require("../utils/utils");
 
 const router = express.Router();
 
@@ -9,4 +9,4 @@ router.put("/:id", verifyToken, ctl.updateChannel);
 router.put("/subscribe/:id", verifyToken, ctl.subscribe);
 router.put("/unsubscribe/:id", verifyToken, ctl.unsubscribe);
 
-export default router;
+module.exports = router;

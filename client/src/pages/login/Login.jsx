@@ -2,9 +2,10 @@ import { useContext, useRef, useState } from "react";
 import "./login.css";
 import { AppContext } from "../../context/AppContext";
 import { Link } from "react-router-dom";
+import * as services from "../../services/services";
 
 export default function Login() {
-  const { state } = useContext(AppContext);
+  const { state, login } = useContext(AppContext);
   const [errorMessage, setErrorMessage] = useState("");
   const userRef = useRef(null);
   const passRef = useRef(null);
@@ -18,7 +19,7 @@ export default function Login() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const username = userRef.current?.value;
@@ -28,9 +29,20 @@ export default function Login() {
       setErrorMessage("Username and password are required.");
       return;
     }
-    console.log("Sign in...", { username, password });
 
-    handleClear();
+    try {
+      const res = await services.login({
+        name: username,
+        email: username,
+        password,
+      });
+      if (res.status == 200) {
+        login(res.data);
+        handleClear();
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div className="login">

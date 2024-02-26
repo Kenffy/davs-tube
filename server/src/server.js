@@ -1,13 +1,15 @@
-import express from "express";
-import dotenv from "dotenv";
-import cookieParser from "cookie-parser";
-import cors from "cors";
-import { mongoConnection } from "./utils/dbConfig.js";
+const express = require("express");
+const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
+const mongoConnection = require("./utils/dbConfig");
 
-import authRoutes from "./routes/auth.js";
-import channelRoutes from "./routes/channels.js";
-import videoRoutes from "./routes/videos.js";
-import commentRoutes from "./routes/comments.js";
+// routes
+const authRoutes = require("./routes/auth");
+const channelRoutes = require("./routes/channels");
+const videoRoutes = require("./routes/videos");
+const commentRoutes = require("./routes/comments");
+const uploadRoutes = require("./routes/uploads");
 
 const app = express();
 dotenv.config();
@@ -24,11 +26,18 @@ app.use(
   })
 );
 
+// static files
+app.use(express.static("assets"));
+app.use("/api/medias/covers", express.static(__dirname + "/assets/covers"));
+app.use("/api/medias/profiles", express.static(__dirname + "/assets/profiles"));
+app.use("/api/medias/videos", express.static(__dirname + "/assets/videos"));
+
 // routes
 app.use("/api/auth", authRoutes);
 app.use("/api/channels", channelRoutes);
 app.use("/api/videos", videoRoutes);
 app.use("/api/comments", commentRoutes);
+app.use("/api/uploads", uploadRoutes);
 
 app.listen(PORT, () => {
   mongoConnection();

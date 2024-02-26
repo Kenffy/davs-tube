@@ -7,11 +7,12 @@ import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { FaHeart, FaRegHeart } from "react-icons/fa6";
 import { FaShare } from "react-icons/fa6";
 import { HiDotsHorizontal } from "react-icons/hi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Video() {
   const [liked, setLiked] = useState(false);
   const [more, setMore] = useState(false);
+
   return (
     <div className="video-preview">
       <div className="video-preview-wrapper container">

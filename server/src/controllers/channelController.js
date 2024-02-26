@@ -1,6 +1,6 @@
-import Channel from "../models/Channel.js";
+const Channel = require("../models/Channel");
 
-export const updateChannel = async (req, res, next) => {
+const updateChannel = async (req, res, next) => {
   if (req.params.id === req.Channel.id) {
     try {
       const updatedChannel = await Channel.findByIdAndUpdate(
@@ -17,7 +17,7 @@ export const updateChannel = async (req, res, next) => {
   }
 };
 
-export const getChannel = async (req, res, next) => {
+const getChannel = async (req, res, next) => {
   try {
     const tmpChannel = await Channel.findById(req.params.id);
     const { createdAt, updatedAt, password, ...channel } = tmpChannel._doc;
@@ -27,7 +27,7 @@ export const getChannel = async (req, res, next) => {
   }
 };
 
-export const subscribe = async (req, res, next) => {
+const subscribe = async (req, res, next) => {
   try {
     await Channel.findByIdAndUpdate(req.channel.id, {
       $push: { subscriptions: req.params.id },
@@ -41,7 +41,7 @@ export const subscribe = async (req, res, next) => {
   }
 };
 
-export const unsubscribe = async (req, res, next) => {
+const unsubscribe = async (req, res, next) => {
   try {
     try {
       await Channel.findByIdAndUpdate(req.channel.id, {
@@ -58,3 +58,5 @@ export const unsubscribe = async (req, res, next) => {
     next(err);
   }
 };
+
+module.exports = { updateChannel, getChannel, subscribe, unsubscribe };

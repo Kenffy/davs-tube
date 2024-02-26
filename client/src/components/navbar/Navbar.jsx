@@ -16,7 +16,7 @@ export default function Navbar() {
   const { state, toggleMenu } = useContext(AppContext);
   const [onSearch, setOnSearch] = useState(false);
   const [onMenu, setOnMenu] = useState(false);
-  const authUser = true;
+  const authUser = state?.user;
 
   const toggleSearch = () => {
     setOnSearch((prev) => !prev);
@@ -74,7 +74,11 @@ export default function Navbar() {
               className="nav-icon"
             >
               <div tabIndex={0} className="nav-avatar">
-                {authUser ? <Avatar size={35} /> : <HiDotsHorizontal />}
+                {authUser ? (
+                  <Avatar src={authUser?.profile} size={35} />
+                ) : (
+                  <HiDotsHorizontal />
+                )}
               </div>
             </div>
             <div className="nav-icon" onClick={toggleMenu}>

@@ -8,28 +8,55 @@ import { FaHeart, FaRegHeart } from "react-icons/fa6";
 import { FaShare } from "react-icons/fa6";
 import { HiDotsHorizontal } from "react-icons/hi";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { format } from "timeago.js";
+import * as services from "../../services/services";
 
 export default function Video() {
   const [liked, setLiked] = useState(false);
   const [more, setMore] = useState(false);
+  const [videoDetails, setVideoDetails] = useState(null);
+  const [videos, setVideos] = useState([]);
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    loadVideoAsync();
+  }, [id]);
+
+  const loadVideoAsync = async () => {
+    try {
+      const res_video = await services.getVideo(id);
+      const res_videos = await services.getVideos();
+      if (res_video) {
+        setVideoDetails(res_video.data);
+      }
+
+      if (res_videos) {
+        setVideos(res_videos.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="video-preview">
       <div className="video-preview-wrapper container">
         <div className="video-preview-left">
-          <VideoPlayer />
-          <h2 className="video-title">
-            Dignissimos dolore aut sapiente quis illum ipsum adipisci inventore
-            sequi accusantium ipsa.
-          </h2>
+          <VideoPlayer video={videoDetails?.videoUrl} />
+          <h2 className="video-title">{videoDetails?.title}</h2>
           <div className="video-preview-infos">
             <div className="channel-infos">
               <div className="left">
-                <a href={`/channel/xyz`} className="avatar-wrapper">
+                <a
+                  href={`/channel/${videoDetails?.channelId}`}
+                  className="avatar-wrapper"
+                >
                   <Avatar size={35} />
                   <div className="avatar-infos">
-                    <h4 className="name">John Doe</h4>
-                    <span className="subscribers">2.6k subscribers</span>
+                    <h4 className="name">{videoDetails?.name}</h4>
+                    <span className="subscribers">{`${videoDetails?.subscribers} subscribers`}</span>
                   </div>
                 </a>
 
@@ -66,21 +93,11 @@ export default function Video() {
                 more ? "video-preview-desc active" : "video-preview-desc"
               }
             >
-              <div className="views">235 views . 5 weeks ago</div>
-              <div className="video-desc">
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Molestiae voluptates ipsum distinctio nisi fugiat impedit
-                  maxime veritatis omnis doloremque ipsam. dolor sit amet
-                  consectetur adipisicing elit. Molestiae voluptates ipsum
-                </p>
-                <p>
-                  dolor sit amet consectetur adipisicing elit. Molestiae
-                  voluptates ipsum ipsum dolor sit amet consectetur adipisicing
-                  elit. Molestiae voluptates ipsum distinctio nisi fugiat
-                  impedit maxime veritatis omnis doloremque ipsam.
-                </p>
+              <div className="views">
+                {`${videoDetails?.views} views`} .{" "}
+                {format(videoDetails?.createdAt)}
               </div>
+              <div className="video-desc">{videoDetails?.desc}</div>
               <span
                 onClick={() => setMore((prev) => !prev)}
                 className="read-more"
@@ -95,8 +112,8 @@ export default function Video() {
           </div>
         </div>
         <div className="video-preview-right">
-          {[...Array(15)].map((item, index) => (
-            <VideoCard key={index} />
+          {videos.map((item, index) => (
+            <VideoCard key={index} video={item} />
           ))}
         </div>
       </div>

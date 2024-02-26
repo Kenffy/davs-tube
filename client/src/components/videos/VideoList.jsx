@@ -7,10 +7,10 @@ export default function VideoList() {
   const [videos, setVideos] = useState([]);
 
   useEffect(() => {
-    loadVideoAsync();
+    loadVideosAsync();
   }, []);
 
-  const loadVideoAsync = async () => {
+  const loadVideosAsync = async () => {
     try {
       const res = await services.getVideos();
       if (res) {
@@ -21,12 +21,10 @@ export default function VideoList() {
     }
   };
 
-  console.log(videos);
-
   return (
     <div className="video-list">
-      {[...Array(30)].map((item, index) => (
-        <VideoCard key={index} />
+      {videos.map((item, index) => (
+        <VideoCard key={index} video={item} />
       ))}
     </div>
   );

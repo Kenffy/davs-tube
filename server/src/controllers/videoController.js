@@ -187,7 +187,7 @@ const fetchChannelInfos = async (videos) => {
         "name profile subscribers"
       ).exec();
       const { _id, ...channel } = tempChannel._doc;
-      results.push({ ...video, ...channel });
+      results.push({ ...video._doc, ...channel });
     }
     return results;
   }

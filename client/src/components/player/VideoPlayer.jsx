@@ -1,10 +1,12 @@
-import Sample from "../../assets/videos/sample.mp4";
+//import Sample from "../../assets/videos/sample.mp4";
 import "./videoplayer.css";
 
-export default function VideoPlayer() {
+const baseURL = import.meta.env.VITE_API_BASE_URL;
+
+export default function VideoPlayer({ video }) {
   return (
     <div className="video-player">
-      <video src={Sample} controls />
+      <video src={`${baseURL}/medias/videos/${video}`} controls />
     </div>
   );
 }

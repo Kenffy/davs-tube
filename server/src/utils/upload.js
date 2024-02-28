@@ -1,9 +1,11 @@
 const multer = require("multer");
+const path = require("path");
 
 // upload settings
 const coverStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "assets/covers");
+    const dest = path.join(__dirname, "../assets/covers");
+    cb(null, dest);
   },
   filename: (req, file, cb) => {
     cb(null, req.body.filename);
@@ -12,7 +14,8 @@ const coverStorage = multer.diskStorage({
 
 const profileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "assets/profiles");
+    const dest = path.join(__dirname, "../assets/profiles");
+    cb(null, dest);
   },
   filename: (req, file, cb) => {
     cb(null, req.body.filename);
@@ -21,7 +24,8 @@ const profileStorage = multer.diskStorage({
 
 const videoStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "assets/videos");
+    const dest = path.join(__dirname, "../assets/videos");
+    cb(null, dest);
   },
   filename: (req, file, cb) => {
     cb(null, req.body.filename);

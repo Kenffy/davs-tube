@@ -3,7 +3,8 @@ import "./videocard.css";
 import { format } from "timeago.js";
 //import Cover from "../../assets/img/bookstore.png";
 
-const baseURL = import.meta.env.VITE_API_BASE_URL;
+//const baseURL = import.meta.env.VITE_API_BASE_URL;
+const baseURL = import.meta.env.VITE_API_PUBLIC_BASE_URL;
 
 export default function VideoCard({ video }) {
   const profileUrl = `${baseURL}/medias/profiles/${video?.profile}`;

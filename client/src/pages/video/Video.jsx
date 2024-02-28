@@ -44,7 +44,7 @@ export default function Video() {
     <div className="video-preview">
       <div className="video-preview-wrapper container">
         <div className="video-preview-left">
-          <VideoPlayer video={videoDetails?.videoUrl} />
+          {videoDetails && <VideoPlayer video={videoDetails.videoUrl} />}
           <h2 className="video-title">{videoDetails?.title}</h2>
           <div className="video-preview-infos">
             <div className="channel-infos">
@@ -56,7 +56,7 @@ export default function Video() {
                   <Avatar size={35} />
                   <div className="avatar-infos">
                     <h4 className="name">{videoDetails?.name}</h4>
-                    <span className="subscribers">{`${videoDetails?.subscribers} subscribers`}</span>
+                    <span className="subscribers">{`${videoDetails?.subscribers.length} subscribers`}</span>
                   </div>
                 </a>
 

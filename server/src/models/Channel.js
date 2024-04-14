@@ -19,6 +19,9 @@ const ChannelSchema = new mongoose.Schema(
     profile: {
       type: String,
     },
+    banner: {
+      type: String,
+    },
     desc: {
       type: String,
     },

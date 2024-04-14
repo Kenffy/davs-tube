@@ -30,6 +30,7 @@ app.use(
 app.use(express.static("assets"));
 app.use("/api/medias/covers", express.static(__dirname + "/assets/covers"));
 app.use("/api/medias/profiles", express.static(__dirname + "/assets/profiles"));
+app.use("/api/medias/banners", express.static(__dirname + "/assets/banners"));
 app.use("/api/medias/videos", express.static(__dirname + "/assets/videos"));
 
 // routes

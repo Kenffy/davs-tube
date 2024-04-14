@@ -22,6 +22,16 @@ const profileStorage = multer.diskStorage({
   },
 });
 
+const bannerStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const dest = path.join(__dirname, "../assets/banners");
+    cb(null, dest);
+  },
+  filename: (req, file, cb) => {
+    cb(null, req.body.filename);
+  },
+});
+
 const videoStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     const dest = path.join(__dirname, "../assets/videos");
@@ -34,6 +44,7 @@ const videoStorage = multer.diskStorage({
 
 const uploadCover = multer({ storage: coverStorage });
 const uploadProfile = multer({ storage: profileStorage });
+const uploadBanner = multer({ storage: bannerStorage });
 const uploadVideo = multer({ storage: videoStorage });
 
-module.exports = { uploadCover, uploadProfile, uploadVideo };
+module.exports = { uploadCover, uploadProfile, uploadBanner, uploadVideo };

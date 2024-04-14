@@ -2,6 +2,8 @@ import { useContext, useRef, useState } from "react";
 import "./register.css";
 import { AppContext } from "../../context/AppContext";
 import { Link } from "react-router-dom";
+import * as services from "../../services/services";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
   const { state } = useContext(AppContext);
@@ -9,6 +11,8 @@ export default function Register() {
   const userRef = useRef(null);
   const emailRef = useRef(null);
   const passRef = useRef(null);
+
+  const navigate = useNavigate();
 
   const handleClear = () => {
     if (passRef.current) {
@@ -22,7 +26,7 @@ export default function Register() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const email = emailRef.current?.value;
@@ -34,8 +38,19 @@ export default function Register() {
       return;
     }
     console.log("Sign up...", { email, username, password });
-
-    handleClear();
+    try {
+      const res = await services.register({
+        name: username,
+        email,
+        password,
+      });
+      if (res.status == 200) {
+        navigate("/login");
+        handleClear();
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

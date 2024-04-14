@@ -18,7 +18,7 @@ export default function NavMenu({ user, open, onClose }) {
       <div className={`nav-menu-wrapper ${state?.theme}`}>
         {user && (
           <NavLink
-            to={`/channel/xyz`}
+            to={`/channel/${user?.id}`}
             onClick={() => onClose(false)}
             className="nav-menu-avatar"
           >

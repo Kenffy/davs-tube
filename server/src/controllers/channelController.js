@@ -1,14 +1,16 @@
 const Channel = require("../models/Channel");
 
 const updateChannel = async (req, res, next) => {
-  if (req.params.id === req.Channel.id) {
+  if (req.params.id === req.channel.id) {
     try {
       const updatedChannel = await Channel.findByIdAndUpdate(
         req.params.id,
         { $set: req.body },
         { new: true }
       );
-      res.status(200).json(updatedChannel);
+      const { createdAt, updatedAt, password, ...channel } =
+        updatedChannel._doc;
+      res.status(200).json(channel);
     } catch (err) {
       next(err);
     }

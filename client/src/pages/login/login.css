@@ -51,6 +51,10 @@
   margin-bottom: 0.5rem;
 }
 
+.login .wrapper.dark .form input {
+  color: var(--white);
+}
+
 .login .wrapper .form button {
   margin-top: 1rem;
   width: 100%;

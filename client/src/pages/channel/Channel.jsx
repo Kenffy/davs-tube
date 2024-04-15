@@ -23,7 +23,7 @@ export default function Channel() {
   const profileUrl = `${baseURL}/medias/profiles/${currentChannel?.profile}`;
   const bannerUrl = `${baseURL}/medias/banners/${currentChannel?.banner}`;
 
-  const authUser = state?.user;
+  const authUser = state?.channel;
 
   useEffect(() => {
     loadCurrentChannel();
@@ -33,10 +33,15 @@ export default function Channel() {
   const loadCurrentChannel = async () => {
     if (!id) return;
     try {
+      if (id == authUser?._id) {
+        setCurrentChannel(authUser);
+        return;
+      }
+
       const res = await services.getChannel(id);
       if (res.status == 200) {
         setCurrentChannel(res.data);
-        if (authUser && res.data.subscribers.includes(authUser.id)) {
+        if (authUser && res.data.subscribers.includes(authUser._id)) {
           setSubStatus(true);
         } else {
           setSubStatus(false);
@@ -95,7 +100,7 @@ export default function Channel() {
             <h4 className="channel-name">{currentChannel?.name}</h4>
             <span className="stats">{`${currentChannel?.subscribers.length} subscribers . ${currentChannel?.videos.length} videos`}</span>
             <p className="desc">{currentChannel?.desc}</p>
-            {authUser && currentChannel?._id === authUser?.id ? (
+            {authUser && currentChannel?._id === authUser?._id ? (
               <button onClick={() => setOnEdit(true)}>Edit Channel</button>
             ) : (
               <button onClick={handleSubscribe}>
@@ -142,7 +147,7 @@ export default function Channel() {
           {tabIndex == 2 && <div className="channel-settings">Settings</div>}
         </div>
       </div>
-      {currentChannel?._id == authUser?.id && (
+      {currentChannel?._id == authUser?._id && (
         <EditChannel
           user={currentChannel}
           setUser={setCurrentChannel}

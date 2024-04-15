@@ -2,7 +2,7 @@ import "./dragdrop.css";
 import { MdCloudDownload } from "react-icons/md";
 import { BsFillCameraVideoFill } from "react-icons/bs";
 
-export default function DragDropFiles({ file, setFile }) {
+export default function DragDropFiles({ file, setFile, selectedVideo }) {
   const handleFile = (e) => {
     e.preventDefault();
     setFile(e.target.files[0]);
@@ -14,6 +14,7 @@ export default function DragDropFiles({ file, setFile }) {
 
   const handleDrop = (e) => {
     e.preventDefault();
+    if (selectedVideo) return;
     if (e.dataTransfer && e.dataTransfer.items[0].type == "video/mp4") {
       setFile(e.dataTransfer.files[0]);
     }
@@ -23,9 +24,15 @@ export default function DragDropFiles({ file, setFile }) {
     <div className="drag-drop" onDragOver={handleDrag} onDrop={handleDrop}>
       <MdCloudDownload className="icon" />
       <h4>Drag and drop your video</h4>
-      {file && <span className="filename">{file.name}</span>}
+      {file ||
+        (selectedVideo && (
+          <span className="filename">
+            {file ? file.name : selectedVideo ? selectedVideo.videoUrl : ""}
+          </span>
+        ))}
       <label htmlFor="upload-video">
         <input
+          disabled={selectedVideo}
           id="upload-video"
           type="file"
           accept="video/mp4"

@@ -4,6 +4,7 @@ const initState = {
   theme: JSON.parse(localStorage.getItem("theme")) || "dark",
   onMenu: false,
   user: JSON.parse(localStorage.getItem("user")) || null,
+  channel: null,
 };
 
 export const AppContext = createContext();
@@ -20,7 +21,11 @@ const reducer = (state, action) => {
         ...state,
         user: action.payload,
       };
-
+    case "LOAD_CHANNEL_INFOS":
+      return {
+        ...state,
+        channel: action.payload,
+      };
     case "LOGOUT":
       return {
         ...state,
@@ -62,13 +67,24 @@ export const AppProvider = ({ children }) => {
     dispatch({ type: "LOGIN", payload: user });
   };
 
+  const loadChannelInfos = (channel) => {
+    dispatch({ type: "LOAD_CHANNEL_INFOS", payload: channel });
+  };
+
   const logout = () => {
     dispatch({ type: "LOGOUT" });
   };
 
   return (
     <AppContext.Provider
-      value={{ state, toggleTheme, toggleMenu, login, logout }}
+      value={{
+        state,
+        toggleTheme,
+        toggleMenu,
+        login,
+        logout,
+        loadChannelInfos,
+      }}
     >
       {children}
     </AppContext.Provider>

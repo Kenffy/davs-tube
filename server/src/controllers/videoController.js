@@ -130,7 +130,7 @@ const deleteVideo = async (req, res, next) => {
     if (!video) return res.status(404).json("Video not found!");
     const channel = await Channel.findById(video.channelId);
     if (channel && req.channel.id === video.channelId) {
-      if (Channel.videos.includes(video._id.toString())) {
+      if (channel.videos.includes(video._id.toString())) {
         await channel.updateOne({
           $pull: { videos: video._id.toString() },
         });

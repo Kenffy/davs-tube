@@ -11,18 +11,22 @@ import "./navmenu.css";
 import { AppContext } from "../../context/AppContext";
 import { useContext } from "react";
 
-export default function NavMenu({ user, open, onClose }) {
+const baseURL = import.meta.env.VITE_API_BASE_URL;
+
+export default function NavMenu({ open, onClose }) {
   const { state, toggleTheme, logout } = useContext(AppContext);
+  const user = state?.channel;
+  const profileUrl = `${baseURL}/medias/profiles/${user?.profile}`;
   return (
     <div className={open ? "nav-menu active" : "nav-menu"}>
       <div className={`nav-menu-wrapper ${state?.theme}`}>
         {user && (
           <NavLink
-            to={`/channel/${user?.id}`}
+            to={`/channel/${user?._id}`}
             onClick={() => onClose(false)}
             className="nav-menu-avatar"
           >
-            <Avatar size={40} />
+            <Avatar size={40} src={user?.profile ? profileUrl : ""} />
             <div className="nav-menu-infos">
               <h4>{user?.name}</h4>
               <span>View Channel</span>

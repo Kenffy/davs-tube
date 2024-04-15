@@ -4,14 +4,15 @@ import "./upsert.css";
 import { FaImage } from "react-icons/fa";
 import { AppContext } from "../../context/AppContext";
 import * as services from "../../services/services";
+import { FaArrowLeft } from "react-icons/fa";
 
-export default function Upsert() {
+export default function Upsert({ selectedVideo, onClose, setSelectedVideo }) {
   const { state } = useContext(AppContext);
   const [cover, setCover] = useState(null);
   const [video, setVideo] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [title, setTitle] = useState("");
-  const [desc, setDesc] = useState("");
+  const [title, setTitle] = useState(selectedVideo ? selectedVideo.title : "");
+  const [desc, setDesc] = useState(selectedVideo ? selectedVideo.desc : "");
 
   const handleCover = (e) => {
     e.preventDefault();
@@ -33,18 +34,37 @@ export default function Upsert() {
       const coverName = await handleUploadCover();
       const videoName = await handleUploadVideo();
 
-      if (!coverName && !videoName) return;
+      if (selectedVideo) {
+        // update
+        const data = {
+          ...selectedVideo,
+          videoUrl: videoName ? videoName : selectedVideo.videoUrl,
+          cover: coverName ? coverName : selectedVideo.cover,
+          title,
+          desc,
+        };
+        const res = await services.updateVideo(selectedVideo._id, data);
+        if (res.status == 200) {
+          clearInputs();
+          setLoading(false);
+          setSelectedVideo(res.data);
+          onClose(false);
+        }
+      } else {
+        // create new video
+        if (!coverName && !videoName) return;
 
-      const data = {
-        videoUrl: videoName,
-        cover: coverName,
-        title,
-        desc,
-      };
-      const res = await services.createVideo(data);
-      if (res) {
-        clearInputs();
-        setLoading(false);
+        const data = {
+          videoUrl: videoName,
+          cover: coverName,
+          title,
+          desc,
+        };
+        const res = await services.createVideo(data);
+        if (res.status == 200) {
+          clearInputs();
+          setLoading(false);
+        }
       }
     } catch (error) {
       console.log(error);
@@ -91,10 +111,20 @@ export default function Upsert() {
   return (
     <div className={`upsert ${state?.theme}`}>
       <div className="wrapper container">
-        <h2 className="heading">Upload new video</h2>
+        <h2 className="heading">
+          <FaArrowLeft
+            onClick={() => onClose(false)}
+            style={{ marginRight: "1rem", cursor: "pointer" }}
+          />
+          {selectedVideo ? "Update Video" : "Upload new video"}
+        </h2>
         <div className="inputs-wrapper">
           <div className="left">
-            <DragDropFiles file={video} setFile={setVideo} />
+            <DragDropFiles
+              file={video}
+              setFile={setVideo}
+              selectedVideo={selectedVideo}
+            />
           </div>
           <div className="right">
             <form className="upsert-form" onSubmit={handleSubmit}>
@@ -116,7 +146,13 @@ export default function Upsert() {
                 <div className="upload-btn">
                   <div className="input-cover">
                     <FaImage className="cover-icon" />{" "}
-                    <span>{cover ? `${cover?.name}` : "Select Cover"}</span>
+                    <span>
+                      {cover
+                        ? `${cover?.name}`
+                        : selectedVideo
+                        ? selectedVideo.cover
+                        : "Select Cover"}
+                    </span>
                   </div>
                 </div>
               </label>
@@ -126,7 +162,9 @@ export default function Upsert() {
                 placeholder="Description"
               />
               <button type="submit">
-                {loading ? "Please wait..." : "Upload"}
+                {loading
+                  ? "Please wait..."
+                  : `${selectedVideo ? "Save" : "Upload"}`}
               </button>
             </form>
           </div>

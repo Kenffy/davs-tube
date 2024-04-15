@@ -5,12 +5,29 @@ import Navbar from "./components/navbar/Navbar";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import { AppContext } from "./context/AppContext";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import Channel from "./pages/channel/Channel";
 import Upsert from "./pages/upsert/Upsert";
+import { getChannel } from "./services/services";
 
 export default function App() {
-  const { state } = useContext(AppContext);
+  const { state, loadChannelInfos } = useContext(AppContext);
+
+  useEffect(() => {
+    getChannelInfos();
+  }, [state?.user]);
+
+  const getChannelInfos = async () => {
+    if (!state?.user) return;
+    try {
+      const res = await getChannel(state.user.id);
+      if (res.status == 200) {
+        loadChannelInfos(res.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className={`app ${state?.theme}`}>

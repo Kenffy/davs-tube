@@ -12,11 +12,15 @@ import Avatar from "../custom/Avatar";
 import Sidebar from "../sidebar/Sidebar";
 import NavMenu from "./NavMenu";
 
+const baseURL = import.meta.env.VITE_API_BASE_URL;
+
 export default function Navbar() {
   const { state, toggleMenu } = useContext(AppContext);
   const [onSearch, setOnSearch] = useState(false);
   const [onMenu, setOnMenu] = useState(false);
-  const authUser = state?.user;
+  const authUser = state?.channel;
+
+  const profileUrl = `${baseURL}/medias/profiles/${authUser?.profile}`;
 
   const toggleSearch = () => {
     setOnSearch((prev) => !prev);
@@ -75,7 +79,7 @@ export default function Navbar() {
             >
               <div tabIndex={0} className="nav-avatar">
                 {authUser ? (
-                  <Avatar src={authUser?.profile} size={35} />
+                  <Avatar src={authUser?.profile ? profileUrl : ""} size={35} />
                 ) : (
                   <HiDotsHorizontal />
                 )}
@@ -85,7 +89,7 @@ export default function Navbar() {
               <GiHamburgerMenu />
             </div>
           </div>
-          <NavMenu user={authUser} open={onMenu} onClose={setOnMenu} />
+          <NavMenu open={onMenu} onClose={setOnMenu} />
         </div>
       </div>
       <Sidebar />
